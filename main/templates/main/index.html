@@ -1,0 +1,49 @@
+{% extends "./base.html" %}
+{% load static %}
+
+
+{% block title %}
+  StoreEVN | Home Page
+{% endblock title %}
+
+
+{% block header %}
+  <h1>Home Page</h1>
+{% endblock header %}
+  
+
+{% block content %}
+  <main>
+    <div class="container mx-auto px-4 py-2">
+      <h2>Pupular Products</h2>
+      <div class="flex gap-4 flex-wrap my-4">
+        
+        {% for product in products  %}
+          <div class="p-4 bg-gray-100 max-w-[300px]">
+            <div class="mb-2 max-w-[300px] max-h-[300px] overflow-hidden">
+              {% if product.image %}
+                <img class="w-full h-full object-cover" src="{{product.image.url}}" alt="{{product.name}}">
+              {% else %}
+                <img class="w-full h-full object-cover" src="https://thumb.ac-illust.com/b1/b170870007dfa419295d949814474ab2_t.jpeg" alt="{{product.name}}">
+              {% endif %}
+            </div>
+            <h3>
+              <a class="block text-lg text-blue-600 my-3" href="{{product.get_absolute_url}}">{{product.name}}</a>
+            </h3>
+            <p>{{product.descr|truncatewords:10}}</p>
+            
+            
+            {% if product.discount %}
+              <p class="line-through">$ {{product.price}}</p>
+              <p>$ {{product.discount_price}}</p>
+            {% else %}
+              <p>$ {{product.price}}</p>
+            {% endif %}
+          </div>
+        {% endfor %}
+          
+      </div>
+    </div>
+  </main>
+{% endblock content %}
+  
