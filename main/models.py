@@ -58,3 +58,23 @@ class Product(models.Model):
         ]
         verbose_name = "Product"
         verbose_name_plural = "Products"
+
+
+class Slider(models.Model):
+    name = models.CharField(max_length=255)
+    descr = models.TextField()
+    image = models.ImageField(upload_to="slider/")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ["name"]
+        indexes = [
+            models.Index(fields=["name"]),
+            models.Index(fields=["-created_at"]),
+        ]
+        verbose_name = "Slider Item"
+        verbose_name_plural = "Slider Items"

@@ -1,0 +1,73 @@
+{% extends "./base.html" %}
+{% load static %}
+
+{% block title %}
+  StoreEVN | {{category.name}}
+{% endblock title %}
+
+{% block header %}
+  <h1>{{category.name}}</h1>
+{% endblock header %}
+
+
+{% block content %}
+  <main>
+    <div class="container mx-auto px-4 flex max-[768px]:flex-wrap gap-4 items-start">
+      {% include './includes/categories.html' %}
+      <div class="basis-auto">
+        <h2 class="text-4xl text-center mb-8">All "{{category.name}}" Products</h2>
+        <div 
+          class="
+            grid 
+            gap-4 
+            grid-cols-3 
+            max-[1280px]:grid-cols-2 
+            max-[1024px]:grid-cols-1 
+            max-[768px]:grid-cols-3
+            max-[580px]:grid-cols-2
+            max-[480px]:grid-cols-1
+          "
+        >
+          {% for product in products  %}
+            <div class="p-4 bg-gray-100 rounded-md">
+              <a 
+                href="{{product.get_absolute_url}}"
+                class="block mb-2 max-h-[300px] overflow-hidden"
+              >
+                {% if product.image %}
+                  <img class="w-full h-full object-cover" src="{{product.image.url}}" alt="{{product.name}}">
+                {% else %}
+                  <img class="w-full h-full object-cover" src="https://thumb.ac-illust.com/b1/b170870007dfa419295d949814474ab2_t.jpeg" alt="{{product.name}}">
+                {% endif %}
+              </a>
+              <h3>
+                <a 
+                  class="block text-lg text-blue-600 my-3 hover:text-blue-300 translation-color duration-300" 
+                  href="{{product.get_absolute_url}}"
+                >
+                  {{product.name}}
+                </a>
+              </h3>
+              <p>{{product.descr|truncatewords:10}}</p>
+              
+              
+              {% if product.discount %}
+                <p class="line-through">$ {{product.price}}</p>
+                <p>$ {{product.discount_price}}</p>
+              {% else %}
+                <p>$ {{product.price}}</p>
+              {% endif %}
+
+              <a 
+                class="block text-lg text-blue-600 mt-3 hover:text-blue-300 translation-color duration-300" 
+                href="{{product.get_absolute_url}}"
+              >
+                View Details
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock content %}

@@ -7,6 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %} {% endblock %}</title>
 
+  {% block slider_css %}
+  {% endblock %}
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -15,13 +17,13 @@
     <div class="container min-h-[90px] mx-auto px-4 py-2 flex justify-between items-center">
       <div>
         <h4>
-          <a href="/" class="text-white">StoreEVN</a>
+          <a href="/" class="text-white text-2xl">StoreEVN</a>
         </h4>
       </div>
       <div>
-        <button class="min-[768px]:hidden">
+        <button data-mobileMenuBtn class="min-[768px]:hidden">
           <svg viewBox="0 0 490.667 490.667" width="24" height="24">
-            <g>
+            <g class="fill-white">
               <path
                 d="M469.333,224h-448C9.551,224,0,233.551,0,245.333c0,11.782,9.551,21.333,21.333,21.333h448   c11.782,0,21.333-9.551,21.333-21.333C490.667,233.551,481.115,224,469.333,224z" />
               <path
@@ -31,12 +33,14 @@
             </g>
           </svg>
         </button>
-        <div class="
+        <div 
+          data-menuContainer
+          class="
             flex items-center jusfity-between gap-8
             max-[768px]:flex-col
             max-[768px]:fixed 
-            max-[768px]:left-0 
-            max-[768px]:top-0 
+            max-[768px]:left-[-5000px]
+            max-[768px]:top-[90px] 
             max-[768px]:p-8 
             max-[768px]:w-full 
             max-[768px]:h-full
@@ -45,16 +49,48 @@
         >
           <ul class="flex gap-4 max-[768px]:flex-col max-[768px]:text-center">
             <li>
-              <a href="#" class="text-white hover:text-emerald-200 transition-color duration-300 text-xl">Home</a>
+              <a 
+                href="{% url 'main:index' %}" 
+                class="
+                  hover:text-emerald-200 transition-color duration-300 text-xl
+                  {% if request.get_full_path == '/' %} text-red-600 {% else %} text-white {% endif %}
+                "
+              >
+                Home
+              </a>
             </li>
             <li>
-              <a href="#" class="text-white hover:text-emerald-200 transition-color duration-300 text-xl">Shop</a>
+              <a 
+                href="{% url 'main:shop' %}" 
+                class="
+                  hover:text-emerald-200 transition-color duration-300 text-xl
+                  {% if request.get_full_path == '/shop/' %} text-red-600 {% else %} text-white {% endif %}
+                "
+              >
+                Shop
+              </a>
             </li>
             <li>
-              <a href="#" class="text-white hover:text-emerald-200 transition-color duration-300 text-xl">About</a>
+              <a 
+                href="{% url 'main:about' %}" 
+                class="
+                  hover:text-emerald-200 transition-color duration-300 text-xl
+                  {% if request.get_full_path == '/about/' %} text-red-600 {% else %} text-white {% endif %}
+                "
+              >
+                About
+              </a>
             </li>
             <li>
-              <a href="#" class="text-white hover:text-emerald-200 transition-color duration-300 text-xl">Contacts</a>
+              <a 
+                href="{% url 'main:contacts' %}" 
+                class="
+                  hover:text-emerald-200 transition-color duration-300 text-xl
+                  {% if request.get_full_path == '/contacts/' %} text-red-600 {% else %} text-white {% endif %}
+                "
+              >
+                Contacts
+              </a>
             </li>
           </ul>
           <div>
@@ -69,8 +105,8 @@
                 hover:text-emerald-800
               "
             >
-            Sign In
-          </a>
+              Sign In
+            </a>
           </div>
         </div>
       </div>
@@ -78,16 +114,20 @@
   </nav>
 
   <header>
-    <div class="container mx-auto px-4 py-2">
+    <div>
       {% block header %}
-      {% endblock %}
+      {% endblock header %}
     </div>
   </header>
 
   {% block content %}
-  {% endblock %}
+  {% endblock content %}
 
   <footer></footer>
+
+  <script src="{% static 'js/script.js' %}"></script>
+  {% block slider_js %}
+  {% endblock slider_js %}
 </body>
 
 </html>
