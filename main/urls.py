@@ -10,9 +10,11 @@ app_name = "main"
 
 urlpatterns = [
     path("", index, name="index"),
-    path("product/<slug:slug>", product_details, name="product_details"),
-    path("category/<slug:slug>", category, name="category"),
     path("shop/", shop, name="shop"),
+    path("shop/<slug:category_slug>", category, name="category"),
+    path("shop/<slug:category_slug>/<slug:product_slug>",
+         product_details, name="product_details"),
+
     path("about/", about, name="about"),
     path("contacts/", contacts, name="contacts"),
 ]

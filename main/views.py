@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.core.paginator import Paginator
 from .models import Product, Category, Slider
 
 
@@ -13,43 +14,53 @@ def index(request):
     return render(request, "main/index.html", data)
 
 
-def product_details(request, slug):
-    product = get_object_or_404(Product, slug=slug, available=True)
-
-    data = {
-        "product": product
-    }
-    return render(request, "main/product-details.html", data)
-
-
 def shop(request, category_slug=None):
     category = None
     categories = Category.objects.all()
     products = Product.objects.filter(available=True)
+    page = request.GET.get("page", 1)
+    paginator = Paginator(products, 6)
+    current_page = paginator.page(int(page))
 
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
-        products = products.filter(category=category)
+        paginator = Paginator(products.filter(category=category), 6)
+        current_page = paginator.page(int(page))
 
     data = {
         "category": category,
         "categories": categories,
-        "products": products
+        "products_qty": products,
+        "products": current_page,
     }
 
     return render(request, "main/shop.html", data)
 
 
-def category(request, slug):
+def category(request, category_slug):
     categories = Category.objects.all()
-    category = get_object_or_404(Category, slug=slug)
+    category = get_object_or_404(Category, slug=category_slug)
     products = category.products.filter(available=True)
+    page = request.GET.get("page", 1)
+    paginator = Paginator(products, 6)
+    current_page = paginator.page(int(page))
+
     data = {
         "categories": categories,
         "category": category,
-        "products": products
+        "products_qty": products,
+        "products": current_page,
     }
     return render(request, "main/category.html", data)
+
+
+def product_details(request, category_slug, product_slug):
+    product = get_object_or_404(Product, slug=product_slug, available=True)
+
+    data = {
+        "product": product
+    }
+    return render(request, "main/product-details.html", data)
 
 
 def about(request):

@@ -14,21 +14,21 @@
 
 {% block content %}
   <main>
-    <div class="container">
-      <div>
+    <div class="container mx-auto px-4 py-2">
+      <div class="max-w-[568px] h-[568px]">
         {% if product.image %}
-          <img src="{{product.image.url}}" alt="{{product.name}}">
+          <img class="w-full h-full object-cover" src="{{product.image.url}}" alt="{{product.name}}">
         {% else %}
-          <img src="https://thumb.ac-illust.com/b1/b170870007dfa419295d949814474ab2_t.jpeg" alt="{{product.name}}">
+          <img class="w-full h-full object-cover" src="https://thumb.ac-illust.com/b1/b170870007dfa419295d949814474ab2_t.jpeg" alt="{{product.name}}">
         {% endif %}
       </div>
       {% if product.discount %}
-        <p>{{product.discount_price}}</p>
+        <p>$ {{product.discount_price}}</p>
       {% else %}
-        <p>{{product.price}}</p>
+        <p>$ {{product.price}}</p>
       {% endif %}
-      <a href="#">ADD To Cart</a>
-        
+
+      <a href="#" class="block text-white mt-4 w-fit bg-gray-600 px-4 py-2">ADD To Cart</a>
     </div>
   </main>
 {% endblock content %}
