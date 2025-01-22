@@ -58,14 +58,14 @@
 {% block content %}
   <main>
     <div class="container mx-auto px-4 py-2">
-      <h2 class="text-4xl text-center my-8">Hot Products</h2>
-      <div class="flex gap-4 flex-wrap my-4">
+      <h2 class="text-4xl text-center my-8">Sale Products</h2>
+      <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 my-4">
         
         {% for product in products  %}
-          <div class="p-4 bg-gray-100 max-w-[300px]">
+          <div class="p-4 bg-gray-100">
             <a 
               href="{{product.get_absolute_url}}"
-              class="block mb-2 max-w-[300px] max-h-[300px] overflow-hidden"
+              class="block mb-2 max-w-full max-h-[248px] overflow-hidden"
             >
               {% if product.image %}
                 <img class="w-full h-full object-cover" src="{{product.image.url}}" alt="{{product.name}}">
