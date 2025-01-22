@@ -1,0 +1,54 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %} Cart {% endblock %}
+
+{% block header %}
+  <h1>Cart</h1>
+{% endblock header %}
+
+
+{% block content %}
+  <main class="container mx-auto px-4 py-2">
+    <h2>Shopping Cart</h2>
+
+    <div>
+      {% for item in cart  %}
+        {% with product=item.product %}
+          <div>
+            <div>
+              {% if product.image %}
+                <img class="w-full h-full object-cover" src="{{product.image.url}}" alt="{{product.name}}">
+              {% else %}
+                <img class="w-full h-full object-cover" src="https://thumb.ac-illust.com/b1/b170870007dfa419295d949814474ab2_t.jpeg" alt="{{product.name}}">
+              {% endif %}
+            </div>
+            <h4>
+              {{product.name}}
+            </h4>
+            <p>Quantity: {{item.quantity}}</p>
+            <p>
+              {% if product.discount %}
+                <p class="line-through">$ {{product.price}}</p>
+                <p>$ {{product.discount_price}}</p>
+              {% else %}
+                <p>$ {{product.price}}</p>
+              {% endif %}
+            </p>
+            <div>
+              <form action="{% url 'cart:cart_remove' product.id %}" method="POST">
+                {% csrf_token %}
+                <input type="submit" value="Remove">
+              </form>
+            </div>
+          </div>
+        {% endwith %}
+      {% endfor %}
+    </div>
+
+    <div>
+      {% comment %} <h5>Total: $ {{cart.get_total_price}}</h5> {% endcomment %}
+    </div>
+  </main>
+{% endblock content %}
+

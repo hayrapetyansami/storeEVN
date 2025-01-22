@@ -28,7 +28,7 @@
         <p>$ {{product.price}}</p>
       {% endif %}
 
-      <a href="#" class="block text-white mt-4 w-fit bg-gray-600 px-4 py-2">ADD To Cart</a>
+      <a href="{% url 'cart:cart_detail' %}" class="block text-white mt-4 w-fit bg-gray-600 px-4 py-2">ADD To Cart</a>
     </div>
   </main>
 {% endblock content %}
