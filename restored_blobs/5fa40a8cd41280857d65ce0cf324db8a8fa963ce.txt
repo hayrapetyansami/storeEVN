@@ -1,4 +1,0 @@
-venv
-main/__pycache__
-base/__pycache__
-cart/__pycache__
