@@ -16,3 +16,12 @@ echo "Համատեղվում են բոլոր blob-երը..."
 cat restored_blobs/*.txt > combined_recovery.txt
 
 echo "Վերականգնումը ավարտված է։ Ստուգիր combined_recovery.txt ֆայլը կամ restored_blobs թղթապանակը։"
+
+# Փոխարկել blob-երի բովանդակությունը ճիշտ տեղ
+mv restored_blobs/*.txt ./index.html  # Պատահական օրինակ
+
+# Ավելացնել դրանք Git-ում
+git add .
+
+# Կատարել նոր commit
+git commit -m "Recovered lost changes"
