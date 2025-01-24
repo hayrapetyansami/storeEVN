@@ -4,41 +4,49 @@
 {% block title %} Cart {% endblock %}
 
 {% block header %}
-  <h1>Cart</h1>
+  <div class="container mx-auto px-4 py-2">
+    <h1 class="text-3xl my-4">Shopping Cart</h1>
+  </div>
+  
 {% endblock header %}
-
 
 {% block content %}
   <main class="container mx-auto px-4 py-2">
-    <h2>Shopping Cart</h2>
-
-    <div>
-      {% for item in cart  %}
+    <div class="bg-emerald-800 rounded-md mb-4"> 
+      {% for item in cart %}
         {% with product=item.product %}
-          <div>
+          <div class="p-4">
+            <div class="flex gap-4 mb-2">
+              <div class="min-w-[64px] h-[64px]">
+                {% if product.image %}
+                  <img class="w-[64px] h-[64px] object-cover" src="{{product.image.url}}" alt="{{product.name}}">
+                {% else %}
+                  <img class="w-[64px] h-[64px] object-cover" src="https://thumb.ac-illust.com/b1/b170870007dfa419295d949814474ab2_t.jpeg" alt="{{product.name}}">
+                {% endif %}
+              </div>
+              <h4 class="text-white mb-2">
+                <a href="{{product.get_absolute_url}}">
+                  {{product.name}}
+                </a>
+              </h4>
+            </div>
+            <p class="text-white mb-2">Quantity: {{item.quantity}}</p>
             <div>
-              {% if product.image %}
-                <img class="w-full h-full object-cover" src="{{product.image.url}}" alt="{{product.name}}">
+              {% if product.discount %}
+                <p class="line-through text-gray-400">$ {{product.price}}</p>
+                <p class="text-white mb-2">$ {{product.discount_price}}</p>
               {% else %}
-                <img class="w-full h-full object-cover" src="https://thumb.ac-illust.com/b1/b170870007dfa419295d949814474ab2_t.jpeg" alt="{{product.name}}">
+                <p class="text-white mb-2">$ {{product.price}}</p>
               {% endif %}
             </div>
-            <h4>
-              {{product.name}}
-            </h4>
-            <p>Quantity: {{item.quantity}}</p>
-            <p>
-              {% if product.discount %}
-                <p class="line-through">$ {{product.price}}</p>
-                <p>$ {{product.discount_price}}</p>
-              {% else %}
-                <p>$ {{product.price}}</p>
-              {% endif %}
-            </p>
             <div>
-              <form action="{% url 'cart:cart_remove' product.id %}" method="POST">
+              <form action="{% url 'cart:cart_remove' product.id %}" method="post">
                 {% csrf_token %}
-                <input type="submit" value="Remove">
+                <input 
+                  type="submit" 
+                  value="Remove"
+                  class="block w-fit px-4 py-2 rounded-md mt-4 text-white bg-emerald-600 cursor-pointer"
+                >
               </form>
             </div>
           </div>
@@ -47,7 +55,16 @@
     </div>
 
     <div>
-      {% comment %} <h5>Total: $ {{cart.get_total_price}}</h5> {% endcomment %}
+      <h5 class="text-2xl">Total Price $ {{cart.get_total_price}}</h5>
+    </div>
+    <div class="flex gap-4">
+      <a href="/shop" class="block w-fit px-4 py-2 rounded-md mt-4 text-white bg-emerald-800">Continue Shopping</a>
+
+      {% with cart_quantity=cart|length  %}
+        {% if cart_quantity > 0 %}
+          <a href="#" class="block w-fit px-4 py-2 rounded-md mt-4 text-white bg-emerald-800">Checkout</a>
+        {% endif %}
+      {% endwith %}
     </div>
   </main>
 {% endblock content %}

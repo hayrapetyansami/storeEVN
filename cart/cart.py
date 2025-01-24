@@ -10,7 +10,6 @@ class Cart:
 
         if not cart:
             cart = self.session[settings.CART_SESSION_ID] = {}
-
         self.cart = cart
 
     def add(self, product, quantity=1, override_quantity=False):
@@ -40,6 +39,7 @@ class Cart:
         product_ids = self.cart.keys()
         products = Product.objects.filter(id__in=product_ids)
         cart = self.cart.copy()
+
         for product in products:
             cart[str(product.id)]["product"] = product
 
@@ -54,14 +54,7 @@ class Cart:
     def clear(self):
         del self.session[settings.CART_SESSION_ID]
 
-    # def get_total_price(self):
-    #     total = (
-    #         (
-    #             Decimal(item["price"]) -
-    #             Decimal(item["price"]) *
-    #             Decimal(item["product"].discount / 100)
-    #         )
-    #         * item["quantity"] for item in self.cart.values()
-    #     )
-
-    #     return format(total, ".2f")
+    def get_total_price(self):
+        total = sum((Decimal(item["price"]) - (Decimal(item["price"]) * Decimal(
+            item["product"].discount / 100))) * item["quantity"] for item in self.cart.values())
+        return format(total, ".2f")

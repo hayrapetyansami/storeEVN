@@ -6,16 +6,17 @@
 {% endblock title %}
 
 {% block header %}
-  <h1>{{category.name}}</h1>
+  <div class="container mx-auto px-4 py-2">
+    <h1 class="text-3xl my-4">{{category.name}}</h1>
+  </div>
 {% endblock header %}
-
 
 {% block content %}
   <main>
     <div class="container mx-auto px-4 flex max-[768px]:flex-wrap gap-4 items-start">
       {% include './includes/categories.html' %}
       <div class="basis-auto">
-        <h2 class="text-4xl text-center mb-8">All "{{category.name}}" Products</h2>
+        <h2 class="text-4xl text-center mb-8">All Products</h2>
         <div 
           class="
             grid 
