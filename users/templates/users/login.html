@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Login {% endblock %}
+
+{% block header %}
+  <div class="container mx-auto px-4 py-2">
+    <h1 class="text-3xl my-4">Login</h1>
+  </div>
+{% endblock header %}
+
+{% block content %}
+  <main>
+    <div class="container mx-auto px-4 py-2">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque eius repellat sed alias ab ex nesciunt sit deleniti cum sequi quos ipsa, soluta reiciendis!</p>
+      <form action="{% url 'users:login' %}" method="POST">
+        {% csrf_token %}
+        {% if request.GET.next %}
+          <input type="hidden" name="next" value="{{request.GET.next}}">
+        {% endif %}
+        <div class="mb-4 mt-4">
+          <input 
+            class="px-4 py-2 border rounded-md"
+            type="text" 
+            name="username" 
+            placeholder="username"
+            value="{% if form.username.value %} {{form.username.value}} {% endif %}"
+            required
+          >
+        </div>
+        <div>
+          <input 
+            class="px-4 py-2 border rounded-md"
+            type="password" 
+            name="password" 
+            placeholder="password"
+            autocomplete="off"
+            required
+          >
+        </div>
+        <div>
+          <input 
+            class="block w-fit px-4 py-2 rounded-md mt-4 text-white bg-emerald-800 cursor-pointer"
+            type="submit" 
+            value="Login"
+          >
+        </div>
+      </form>
+
+      <p class="mt-4 text-gray-600">
+        If you don't have account you can
+        <a class="text-blue-600" href="{% url 'users:registration' %}">Register</a>
+        new account
+      </p>
+    </div>
+  </main>
+{% endblock content %}
