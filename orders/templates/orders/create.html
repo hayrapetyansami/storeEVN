@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Create {% endblock %}
+
+{% block header %}
+  <div class="container mx-auto px-4 py-2">
+    <h1 class="text-3xl my-4">Create Order</h1>
+  </div>
+{% endblock header %}
+
+{% block content %}
+  <main>
+    <div class="container mx-auto px-4 py-2">
+      <form action="" method="POST">
+        {% csrf_token %}
+        <div class="mb-4 mt-4">
+          <input 
+            class="px-4 py-2 border rounded-md"
+            type="text" 
+            name="first_name" 
+            placeholder="First Name"
+            value="{{ form.first_name.value|default:'' }}"
+            required
+          >
+        </div>
+        <div class="mb-4 mt-4">
+          <input 
+            class="px-4 py-2 border rounded-md"
+            type="text" 
+            name="last_name" 
+            placeholder="Last Name"
+            value="{{ form.last_name.value|default:'' }}"
+            required
+          >
+        </div>
+        <div class="mb-4 mt-4">
+          <input 
+            class="px-4 py-2 border rounded-md"
+            type="text" 
+            name="email" 
+            placeholder="Email"
+            value="{{ form.email.value|default:'' }}"
+            required
+          >
+        </div>
+        <div class="mb-4 mt-4">
+          <input 
+            class="px-4 py-2 border rounded-md"
+            type="text" 
+            name="country" 
+            placeholder="Country"
+            value="{{ form.country.value|default:'' }}"
+            required
+          >
+        </div>
+        <div class="mb-4 mt-4">
+          <input 
+            class="px-4 py-2 border rounded-md"
+            type="text" 
+            name="city" 
+            placeholder="City"
+            value="{{ form.city.value|default:'' }}"
+            required
+          >
+        </div>
+        <div class="mb-4 mt-4">
+          <input 
+            class="px-4 py-2 border rounded-md"
+            type="text" 
+            name="address" 
+            placeholder="Address"
+            value="{{ form.address.value|default:'' }}"
+            required
+          >
+        </div>
+        <div class="mb-4 mt-4">
+          <input 
+            class="px-4 py-2 border rounded-md"
+            type="text" 
+            name="postal_code" 
+            placeholder="Postal Code"
+            value="{{ form.postal_code.value|default:'' }}"
+            required
+          >
+        </div>
+        <div>
+          <input 
+            class="block w-fit px-4 py-2 rounded-md mt-4 text-white bg-emerald-800 cursor-pointer"
+            type="submit" 
+            value="Place Order"
+          >
+        </div>
+      </form>
+    </div>
+    <div class="container mx-auto px-4 py-2">
+      <h2 class="text-3xl mb-4 mt-8">Checkout</h2>
+
+      <div>
+        {% for item in cart  %}
+            <li class="mb-4">
+              {{item.quantity}} x {{item.product.name}}
+              {% if item.product.discount %}
+                <p class="line-through text-gray-400">$ {{item.product.price}}</p>
+                <p class="text-black mb-2">$ {{item.product.discount_price}}</p>
+              {% else %}
+                <p class="text-white mb-2">$ {{item.product.price}}</p>
+              {% endif %}
+            </li>
+            <p>Total $ {{cart.get_total_price}}</p>
+        {% endfor %}
+      </div>
+    </div>
+  </main>
+{% endblock content %}

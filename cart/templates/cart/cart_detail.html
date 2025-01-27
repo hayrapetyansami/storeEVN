@@ -65,7 +65,7 @@
 
       {% with cart_quantity=cart|length  %}
         {% if cart_quantity > 0 %}
-          <a href="#" class="block w-fit px-4 py-2 rounded-md mt-4 text-white bg-emerald-800">Checkout</a>
+          <a href="{% url 'orders:order_create' %}" class="block w-fit px-4 py-2 rounded-md mt-4 text-white bg-emerald-800">Checkout</a>
         {% endif %}
       {% endwith %}
     </div>
