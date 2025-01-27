@@ -1,5 +1,2 @@
 venv
-main/__pycache__
-main/migrations/__pycache__
-base/__pycache__
-cart/__pycache__
+__pycache__/
