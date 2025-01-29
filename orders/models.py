@@ -23,9 +23,9 @@ class Order(models.Model):
     paid = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ["-created"]
+        ordering = ["created"]
         indexes = [
-            models.Index(fields=["-created"])
+            models.Index(fields=["created"])
         ]
 
     def __str__(self):

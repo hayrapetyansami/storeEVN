@@ -8,6 +8,10 @@ class User(AbstractUser):
         blank=True,
         null=True,
     )
+    country = models.CharField(blank=True, null=True, default=None)
+    city = models.CharField(blank=True, null=True, default=None)
+    address = models.CharField(blank=True, null=True, default=None)
+    postal_code = models.CharField(blank=True, null=True, default=None)
 
     class Meta:
         db_table = "user"

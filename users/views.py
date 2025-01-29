@@ -18,7 +18,7 @@ def login(request):
 
             if user:
                 auth.login(request, user)
-                return HttpResponseRedirect(reverse("main:index"))
+                return HttpResponseRedirect(reverse("users:profile"))
     else:
         form = UserLoginForm()
     return render(request, "users/login.html", {"form": form})
@@ -34,7 +34,7 @@ def registration(request):
             messages.success(
                 request, f"{user.username} successful registration !"
             )
-            return HttpResponseRedirect(reverse("users:login"))
+            return HttpResponseRedirect(reverse("users:profile"))
     else:
         form = UserRegistrationForm()
     return render(request, "users/registration.html")
@@ -45,7 +45,7 @@ def profile(request):
     if request.method == "POST":
         form = ProfileForm(
             data=request.POST,
-            isinstance=request.user,
+            instance=request.user,
             files=request.FILES
         )
         if form.is_valid():
@@ -53,12 +53,14 @@ def profile(request):
             messages.success(request, "Profile was changed")
             return HttpResponseRedirect(reverse("users:profile"))
     else:
-        form = ProfileForm(isinstance=request.user)
+        form = ProfileForm(instance=request.user)
 
     orders = Order.objects.filter(user=request.user).prefetch_related(
-        "items",
-        queryset=OrderItem.objects.select_related("product")
-    ).order_by("-id")
+        Prefetch(
+            "items",
+            queryset=OrderItem.objects.select_related("product"),
+        )
+    ).order_by("id")
 
     return render(
         request,

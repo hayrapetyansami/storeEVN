@@ -19,8 +19,12 @@ class UserRegistrationForm(UserCreationForm):
     last_name = forms.CharField()
     username = forms.CharField()
     email = forms.EmailField()
-    password1 = forms.CharField()
-    password2 = forms.CharField()
+    password = forms.CharField()
+    confirm_password = forms.CharField()
+    country = forms.CharField()
+    city = forms.CharField()
+    address = forms.CharField()
+    postal_code = forms.CharField()
 
     class Meta:
         model = User
@@ -29,8 +33,12 @@ class UserRegistrationForm(UserCreationForm):
             "last_name",
             "username",
             "email",
-            "password1",
-            "password2",
+            "password",
+            "confirm_password",
+            "country",
+            "city",
+            "address",
+            "postal_code",
         )
 
 
@@ -38,7 +46,12 @@ class ProfileForm(UserChangeForm):
     avatar = forms.ImageField(required=False)
     first_name = forms.CharField()
     last_name = forms.CharField()
-    email = forms.CharField()
+    username = forms.CharField()
+    email = forms.EmailField()
+    country = forms.CharField()
+    city = forms.CharField()
+    address = forms.CharField()
+    postal_code = forms.CharField()
 
     class Meta:
         model = User
@@ -46,5 +59,10 @@ class ProfileForm(UserChangeForm):
             "avatar",
             "first_name",
             "last_name",
-            "email"
+            "username",
+            "email",
+            "country",
+            "city",
+            "address",
+            "postal_code",
         )

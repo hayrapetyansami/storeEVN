@@ -10,6 +10,10 @@ class OrderCreateForm(forms.ModelForm):
             self.initial["first_name"] = self.request.user.first_name
             self.initial["last_name"] = self.request.user.last_name
             self.initial["email"] = self.request.user.email
+            self.initial["country"] = self.request.user.country
+            self.initial["city"] = self.request.user.city
+            self.initial["address"] = self.request.user.address
+            self.initial["postal_code"] = self.request.user.postal_code
 
     def save(self, commit=True):
         order = super().save(commit=False)

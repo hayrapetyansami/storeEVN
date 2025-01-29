@@ -10,5 +10,152 @@
 {% endblock header %}
 
 {% block content %}
-  <h1>Profile Content</h1>
+  <main>
+    <div class="container mx-auto px-4 py-2">
+      <form 
+        action="{% url 'users:profile' %}"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        {% csrf_token %}
+
+        <div class="flex gap-8 items-center justify-between">
+          <div class="flex-1">
+            {% if user.avatar %}
+              <img src="{{user.avatar.url}}" alt="Avatar">
+            {% else %}
+              <img src="{% static 'img/no-image.webp' %}" alt="No Avatar">
+            {% endif %}
+            <input type="file" name="avatar" accept="image/*" class="mt-4">
+          </div>
+          <div class="flex-1">
+            <label class="flex mb-4 gap-2 justify-between items-center">
+              <span>First Name:</span>
+              <input 
+                type="text"
+                name="first_name"
+                placeholder="Type here..."
+                value="{{form.first_name.value}}"
+                required
+                class="px-4 py-2 border rounded-md"
+              >
+            </label>
+            <label class="flex mb-4 gap-2 justify-between items-center">
+              <span>Last Name:</span>
+              <input 
+                type="text"
+                name="last_name"
+                placeholder="Type here..."
+                value="{{form.last_name.value}}"
+                required
+                class="px-4 py-2 border rounded-md"
+              >
+            </label>
+            <label class="flex mb-4 gap-2 justify-between items-center">
+              <span>Email:</span>
+              <input 
+                type="text"
+                name="email"
+                placeholder="Type here..."
+                value="{{form.email.value}}"
+                required
+                class="px-4 py-2 border rounded-md"
+              >
+            </label>
+            <label class="flex mb-4 gap-2 justify-between items-center">
+              <span>Username:</span>
+              <input 
+                type="text"
+                name="username"
+                placeholder="Type here..."
+                value="{{form.username.value}}"
+                required
+                class="px-4 py-2 border rounded-md"
+              >
+            </label>
+            <label class="flex mb-4 gap-2 justify-between items-center">
+              <span>Country:</span>
+              <input 
+                type="text"
+                name="country"
+                placeholder="Type here..."
+                value="{{form.country.value}}"
+                required
+                class="px-4 py-2 border rounded-md"
+              >
+            </label>
+            <label class="flex mb-4 gap-2 justify-between items-center">
+              <span>City:</span>
+              <input 
+                type="text"
+                name="city"
+                placeholder="Type here..."
+                value="{{form.city.value}}"
+                required
+                class="px-4 py-2 border rounded-md"
+              >
+            </label>
+            <label class="flex mb-4 gap-2 justify-between items-center">
+              <span>Address:</span>
+              <input 
+                type="text"
+                name="address"
+                placeholder="Type here..."
+                value="{{form.address.value}}"
+                required
+                class="px-4 py-2 border rounded-md"
+              >
+            </label>
+            <label class="flex mb-4 gap-2 justify-between items-center">
+              <span>Postal Code:</span>
+              <input 
+                type="text"
+                name="postal_code"
+                placeholder="Type here..."
+                value="{{form.postal_code.value}}"
+                required
+                class="px-4 py-2 border rounded-md"
+              >
+            </label>
+            <button class="block w-fit px-4 py-2 rounded-md mt-4 text-white bg-emerald-800 cursor-pointer" type="submit">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="container mx-auto px-4 py-2">
+      <h2 class="text-3xl mt-4">Your Orders</h2>
+      {% if orders  %}
+        <div>
+          {% for order in orders %}
+            <div class="mb-8">
+              <h5 class="mb-4 mt-4 text-2xl">Order ID #{{order.id}}</h5>
+              {% for item in order.items.all %}
+                <div class="flex gap-4 items-center">
+                  <img 
+                    src="{{item.product.image.url}}" 
+                    alt="{{item.product.name}}"
+                    class="w-16 h-16 object-cover"
+                  >
+                  <div>
+                    <h4>
+                      <a href="{{item.product.get_absolute_url}}">
+                        {{item.product.name}}
+                      </a>
+                    </h4>
+                    <p>
+                      Quantity: {{item.quantity}}
+                    </p>
+                    <p>Price: {{item.price}}</p>
+                    <p>Order Created in: {{order.created|date:"Y/m/d h:m:s"}}</p>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <h4>You haven't ordered anything yet.</h4>
+      {% endif %}
+    </div>
+  </main>
 {% endblock content %}

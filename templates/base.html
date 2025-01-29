@@ -113,20 +113,51 @@
               </a>
             </li>
           </ul>
-          <div>
-            <a href="{% url 'users:login' %}" 
-              class="
-                bg-emerald-600 
-                rounded-md px-4 
-                py-2 text-emerald-200
-                transition-color
-                duration-300
-                hover:bg-emerald-300
-                hover:text-emerald-800
-              "
-            >
-              Sign In
-            </a>
+          <div class="flex gap-4">
+            {% if request.user.is_authenticated %}
+              <a 
+                href="{% url 'users:profile' %}"
+                class="
+                  bg-emerald-600 
+                  rounded-md px-4 
+                  py-2 text-emerald-200
+                  transition-color
+                  duration-300
+                  hover:bg-emerald-300
+                  hover:text-emerald-800
+                "
+              >
+                Profile
+              </a>
+              <a href="{% url 'users:logout' %}" 
+                class="
+                  bg-emerald-600 
+                  rounded-md px-4 
+                  py-2 text-emerald-200
+                  transition-color
+                  duration-300
+                  hover:bg-emerald-300
+                  hover:text-emerald-800
+                "
+              >
+                Sign Out
+              </a>
+            {% else %}
+              <a href="{% url 'users:login' %}" 
+                class="
+                  bg-emerald-600 
+                  rounded-md px-4 
+                  py-2 text-emerald-200
+                  transition-color
+                  duration-300
+                  hover:bg-emerald-300
+                  hover:text-emerald-800
+                "
+              >
+                Sign In
+              </a>
+            {% endif %}
+
           </div>
         </div>
       </div>

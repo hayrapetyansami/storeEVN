@@ -13,7 +13,7 @@
   <main>
     <div class="container mx-auto px-4 py-2">
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque eius repellat sed alias ab ex nesciunt sit deleniti cum sequi quos ipsa, soluta reiciendis!</p>
-      <form action="{% url 'users:login' %}" method="POST">
+      <form class="pb-4" action="{% url 'users:login' %}" method="POST">
         {% csrf_token %}
         {% if request.GET.next %}
           <input type="hidden" name="next" value="{{request.GET.next}}">
@@ -46,12 +46,11 @@
           >
         </div>
       </form>
-
-      <p class="mt-4 text-gray-600">
-        If you don't have account you can
-        <a class="text-blue-600" href="{% url 'users:registration' %}">Register</a>
-        new account
-      </p>
+      <hr>
+      <div class="mt-4">
+        <a class="block mb-2 text-blue-600 font-medium" href="{% url 'users:registration' %}">Create Account</a>
+        <a class="block text-blue-600 font-medium" href="#">Reset Password</a>
+      </div>
     </div>
   </main>
 {% endblock content %}
