@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Payment Process
+{% endblock %}
+
+{% block content %}
+    <main class="container mx-auto px-4 py-2 text-center">
+        <h1 class="text-3xl my-4">Payment Process</h1>
+        <p class="text-xl my-4">Please wait while your payment is being processed.</p>
+        <div>
+            {% for item in order.items.all %}
+                {% with item=item.product %}
+                    <div>
+                        <div class="max-w-[568px] h-[568px]">
+                            {% if item.image %}
+                              <img class="w-full h-full object-cover" src="{{item.image.url}}" alt="{{item.name}}">
+                            {% else %}
+                              <img class="w-full h-full object-cover" src="https://thumb.ac-illust.com/b1/b170870007dfa419295d949814474ab2_t.jpeg" alt="{{item.name}}">
+                            {% endif %}
+                          </div>
+                        <h3>{{item.name}}</h3>
+                        {% if item.discount %}
+                            <p>$ {{item.discount_price}}</p>
+                        {% else %}
+                            <p>$ {{item.price}}</p>
+                        {% endif %}
+                        <p>Quantity: {{item.quantity}}</p>
+                    </div>
+                    <form action="{% url 'cart:cart_remove' item.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" class="block w-fit px-4 py-2 rounded-md mt-4 text-white bg-emerald-800 cursor-pointer" value="Remove From Cart">
+                    </form>
+                {% endwith %}
+            {% endfor %}
+
+            <form action="{% url 'payment:process' %}" method="POST">
+                {% csrf_token %}
+                <input type="submit" class="block w-fit px-4 py-2 rounded-md mt-4 text-white bg-emerald-800 cursor-pointer" value="Pay">
+            </form>
+        </div>
+    </main>
+{% endblock %}
