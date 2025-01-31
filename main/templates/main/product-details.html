@@ -1,6 +1,44 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block fancy_css %}
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"
+  />
+{% endblock fancy_css %}
+
+{% block fancy_js %}
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+  <script>
+    Fancybox.bind("[data-fancybox='gallery']", {
+      thumbs: {
+        autoStart: true,
+      },
+      keyboard: {
+        close: "Escape",
+      },
+      slideShow: {
+        autoStart: true,
+      },
+      fullScreen: {
+        autoStart: true,
+      },
+      thumb: {
+        autoStart: true,
+      },
+      animationEffect: "fade",
+      transitionEffect: "slide",
+      loop: true,
+      Images: {
+        initialSize: "fit",
+      }
+    });
+  </script>
+{% endblock fancy_js %}
+
+
+
 {% block title %}
   StoreEVN | {{product.name}}
 {% endblock title %}
@@ -20,7 +58,22 @@
         {% else %}
           <img class="w-full h-full object-cover" src="https://thumb.ac-illust.com/b1/b170870007dfa419295d949814474ab2_t.jpeg" alt="{{product.name}}">
         {% endif %}
+
       </div>
+      <div class="flex gap-2 my-4">
+        {% for item in product.images.all %}
+          <a
+            data-fancybox="gallery"
+            data-src="{{item.image.url}}"
+            data-caption="{{product.descr}}"
+            class="cursor-zoom-in"
+            aria-hidden="true"
+          >
+          <img src="{{item.image.url}}" width="80" height="40" alt="{{product.name}}" />
+        </a>  
+        {% endfor %}
+      </div>
+      <p class="my-4">{{product.descr}}</p>
       {% if product.discount %}
         <p>$ {{product.discount_price}}</p>
       {% else %}

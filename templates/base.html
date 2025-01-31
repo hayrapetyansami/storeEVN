@@ -5,10 +5,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %} {% endblock %}</title>
+  <title>{% block title %} {% endblock title %}</title>
 
   {% block slider_css %}
-  {% endblock %}
+  {% endblock slider_css %}
+  {% block fancy_css %}
+  {% endblock fancy_css %}
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -177,6 +179,8 @@
   <script src="{% static 'js/script.js' %}"></script>
   {% block slider_js %}
   {% endblock slider_js %}
+  {% block fancy_js %}
+  {% endblock fancy_js %}
 </body>
 
 </html>
