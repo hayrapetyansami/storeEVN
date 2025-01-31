@@ -37,6 +37,9 @@ def registration(request):
             return HttpResponseRedirect(reverse("users:profile"))
     else:
         form = UserRegistrationForm()
+        messages.MessageFailure(
+            request, "Failed registration !"
+        )
     return render(request, "users/registration.html")
 
 

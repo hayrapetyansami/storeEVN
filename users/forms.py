@@ -18,9 +18,9 @@ class UserRegistrationForm(UserCreationForm):
     first_name = forms.CharField()
     last_name = forms.CharField()
     username = forms.CharField()
-    email = forms.EmailField()
-    password = forms.CharField()
-    confirm_password = forms.CharField()
+    email = forms.CharField()
+    password1 = forms.CharField()
+    password2 = forms.CharField()
     country = forms.CharField()
     city = forms.CharField()
     address = forms.CharField()
@@ -33,8 +33,8 @@ class UserRegistrationForm(UserCreationForm):
             "last_name",
             "username",
             "email",
-            "password",
-            "confirm_password",
+            "password1",
+            "password2",
             "country",
             "city",
             "address",
